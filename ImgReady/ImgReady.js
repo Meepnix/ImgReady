@@ -1,5 +1,5 @@
 /**
- * @fileoverview Function scope class module, containing a imagine caching Utility.
+ * @fileoverview Function scope class module, containing a resource caching Utility.
  * @Author Christopher Massey
  * @preserve Copyright 2011 Christopher Massey.
  *     See LICENCE for details.
@@ -28,7 +28,7 @@ var ImgReady = (function create()
      * Method allows for a png image file to be cached in this instance of ImgReady 
      *     and returns a reference of the specfic image that was just cached.
      * @parameter {string} url This parameter receives a relative uniform resource locator.
-     *    Example: "images/rocket.png"
+     *     Example: "images/rocket.png"
      * @returns {Image} Returns reference of image instance.
      */
     ImgReady.prototype.addImage = function(url) 
@@ -45,9 +45,28 @@ var ImgReady = (function create()
         return this.imageArray[locate - 1];
     };
     
+     /**
+     * Method allows for a browser compartible audio file to be cached and returns a reference to 
+     *     the cached file.
+     * @parameter {string} url This parameter receives a relative uniform resource locator.
+     *     Example: "sounds/alert.ogg"
+     * @returns {Audio} Returns reference of audio instance.
+     */
+    ImgReady.prototype.addAudio = function(url)
+    {
+        var locate = 0;
+        
+        locate = this.imageArray.push(new Audio());
+        this.imageArray[locate - 1].loadStat = false;
+        //Once the audio data has loaded run function to change load status.
+        this.imageArray[locate - 1].oncanplaythrough = this._imageLoaded(locate - 1);
+        this.imageArray[locate - 1].src = url;
+        
+        return this.imageArray[locate - 1];
+    
     /**
      * Private Method is for changing the status of the received Image 
-           and running an external function, if implemented
+     *     and running an external function, if implemented
      * @parameter {Image} locat This is a reference to an Image instance with an 
      *     extra boolean property: loadStat.
      */
@@ -101,88 +120,3 @@ var ImgReady = (function create()
     return ImgReady;
     
 }());
-
-    
-
-function render()
-{
-     
-    //Setting up canvas
-    
-    var canvas = document.getElementById('c');
-    var context = canvas.getContext('2d');
-    
-    var interLoad;
-    
-    //Set Canvas size
-    var width = 1000;
-    var height = 500;
-    
-    var percent = 0;
-    
-    canvas.width = width; 
-    canvas.height = height;
-    
-    imgStor = new ImgReady();
-     
-    enterpriseImg = imgStor.addImage("images/enterprise.png");
-    rocketImg = imgStor.addImage("images/rocket.png");
-    pikeImg = imgStor.addImage("images/pike.png");
-    spockImg = imgStor.addImage("images/spock.png");
-    serenityImg = imgStor.addImage("images/serenity.png");
-    
-    var loading = function()
-    {
-        percent = imgStor.getPercent();
-        
-        clear();
-        context.fillStyle = "black";
-        context.font = "20px sans-serif";
-        context.fillText( "loading "+percent+" %", 300, 300 );
-        
-        
-        if (percent == 100)
-        {
-            clearInterval(interLoad);
-            start();
-        }
-        
-        
-    };
-    
-    var start = function()
-    {
-    
-        //clear();
-        context.drawImage(rocketImg, 50, 50);
-        context.drawImage(pikeImg, 100, 100);
-   
-    };
-    
-    var clear = function()
-    {
-        context.clearRect(0, 0, width, height);
-    };
-    
-    
-    interLoad = setInterval(loading, 20)
-    
-    
-    
-    
-    
-}
-
-
-//Engage!!!
-
-window.onload = function(){
-	
-    
-    render();
-    
-
-    
-	
-    
-};
