@@ -5,6 +5,8 @@
  *     See LICENCE for details.
  */
 
+/** Function that implements a canvas and its resources.
+ */
 function render()
 {
      
@@ -27,16 +29,18 @@ function render()
     //Setup ImgReady class from ImgReady Module
     imgStor = new ImgReady();
     
-    //Cache images
-    enterpriseImg = imgStor.addImage("images/enterprise.png");
+    //Cache resources
+    boomAud = imgStor.addAudio("sounds/boom.ogg");
+    pewAud = imgStor.addAudio9"sounds/pew.ogg");
     rocketImg = imgStor.addImage("images/rocket.png");
     pikeImg = imgStor.addImage("images/pike.png");
-    spockImg = imgStor.addImage("images/spock.png");
-    serenityImg = imgStor.addImage("images/serenity.png");
+    
+    //Every second checks the status of resources loading
+    interLoad = setInterval(loading, 1000)
     
     
-    /**
-    *
+    /** Function Closure that renders resource load status and runs the main render 
+    *    once all the resources have loaded.
     */
     var loading = function()
     {
@@ -57,27 +61,27 @@ function render()
         
     };
     
+    /** Function Closure that runs the successfully cached resources.
+     */
     var start = function()
     {
     
-        //clear();
+        //Play sounds
+        boomAud.play();
+        pewAud.play();
+        //Render images
         context.drawImage(rocketImg, 50, 50);
         context.drawImage(pikeImg, 100, 100);
    
     };
     
+    /** Function Closure that clears the canvas.
+     */
     var clear = function()
     {
         context.clearRect(0, 0, width, height);
     };
-    
-    
-    interLoad = setInterval(loading, 20)
-    
-    
-    
-    
-    
+        
 }
 
 
@@ -85,11 +89,6 @@ function render()
 
 window.onload = function(){
 	
-    
     render();
-    
-
-    
-	
     
 };
