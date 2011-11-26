@@ -27,21 +27,21 @@ function render()
     canvas.height = height;
     
     //Setup ImgReady class from ImgReady Module
-    imgStor = new ImgReady();
+    var imgStor = new ImgReady();
     
     //Cache resources
-    boomAud = imgStor.addAudio("sounds/boom.ogg");
-    pewAud = imgStor.addAudio9"sounds/pew.ogg");
-    rocketImg = imgStor.addImage("images/rocket.png");
-    pikeImg = imgStor.addImage("images/pike.png");
+    var boomAud = imgStor.addAudio("sounds/boom.ogg");
+    var pewAud = imgStor.addAudio9"sounds/pew.ogg");
+    var rocketImg = imgStor.addImage("images/rocket.png");
+    var pikeImg = imgStor.addImage("images/pike.png");
     
     //Every second checks the status of resources loading
-    interLoad = setInterval(loading, 1000)
+    var interLoad = setInterval(loading, 1000);
     
     
     /** Function Closure that renders resource load status and runs the main render 
-    *    once all the resources have loaded.
-    */
+     *     once all the resources have loaded.
+     */
     var loading = function()
     {
         percent = imgStor.getPercent();

@@ -5,13 +5,11 @@
  *     See LICENCE for details.
  */
 
-var ImgReady = (function create() 
-    {
+var ImgReady = (function create() {
     /**
       @lends ImgReady.prototype
     */
 
-    
     /**
      * Class for caching and status of image resources being loaded.
      * @constructor
@@ -63,6 +61,7 @@ var ImgReady = (function create()
         this.imageArray[locate - 1].src = url;
         
         return this.imageArray[locate - 1];
+    };
     
     /**
      * Private Method is for changing the status of the received Image 
